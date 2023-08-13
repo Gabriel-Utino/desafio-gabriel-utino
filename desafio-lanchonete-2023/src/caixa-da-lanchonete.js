@@ -11,70 +11,70 @@ class CaixaDaLanchonete {
       combo2: 7.5
     }
 
-    let result = 0;
+    let result = 0
+    let cafeCount = false
+    let sanduCount = false
 
     const dependencias = {
       chantily: 'cafe',
       queijo: 'sanduiche'
     }
-    let cafeCount = false;
-    let sanduCount = false;
 
     for (const item of itens) {
-      const [codigo, quantidade] = item.split(',');
+      const [codigo, quantidade] = item.split(',')
       if (menu.hasOwnProperty(codigo)) {
         if (parseInt(quantidade) == 0) {
-          result = 'Quantidade inválida!';
+          result = 'Quantidade inválida!'
         } else {
           if (menu[codigo] === 3.0) {
-            cafeCount = true;
+            cafeCount = true
           } else if (menu[codigo] === 6.5) {
-            sanduCount = true;
+            sanduCount = true
           }
           if (metodoDePagamento == `dinheiro`) {
-            result += menu[codigo] * 0.95 * parseInt(quantidade);
+            result += menu[codigo] * 0.95 * parseInt(quantidade)
           } else if (metodoDePagamento == `credito`) {
-            result += menu[codigo] * 1.03 * parseInt(quantidade);
+            result += menu[codigo] * 1.03 * parseInt(quantidade)
           } else if (metodoDePagamento == `debito`) {
-            result += menu[codigo] * parseInt(quantidade);
+            result += menu[codigo] * parseInt(quantidade)
           } else {
-            result = `Forma de pagamento inválida!`;
-            break;
+            result = `Forma de pagamento inválida!`
+            break
           }
           if (dependencias[codigo] == `cafe`) {
             if (!cafeCount) {
-              result = `Item extra não pode ser pedido sem o principal`;
-              break;
+              result = `Item extra não pode ser pedido sem o principal`
+              break
             }
           } else if (dependencias[codigo] == `sanduiche`) {
             if (!sanduCount) {
-              result = `Item extra não pode ser pedido sem o principal`;
-              break;
+              result = `Item extra não pode ser pedido sem o principal`
+              break
             }
           }
         }
       } else {
-        result = `Item inválido!`;
-        break;
+        result = `Item inválido!`
+        break
       }
     }
 
     function isNumber(value) {
-      return typeof value === 'number' && Number.isFinite(value);
+      return typeof value === 'number' && Number.isFinite(value)
     }
 
     if (isNumber(result)) {
-      result = Math.round(result * 1000)/1000;
-      const change = result.toFixed(2);
+      result = Math.round(result * 1000) / 1000
+      const change = result.toFixed(2)
 
       if (result == 0.0) {
-        return 'Não há itens no carrinho de compra!';
+        return 'Não há itens no carrinho de compra!'
       } else {
-        result = change.toString().replace('.', ',');
-        return `R$ ${result}`;
+        result = change.toString().replace('.', ',')
+        return `R$ ${result}`
       }
     } else {
-      return result;
+      return result
     }
   }
 }
